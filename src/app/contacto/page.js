@@ -8,8 +8,9 @@ export default function Contacto() {
         </p>
 
         <div className="mt-6 space-y-2 text-sm">
-          <p>📞 Teléfono: 33 2920 8149</p>
-          <p>📍 Dirección: Guadalajara, Jalisco</p>
+          <p>📞 Teléfono: 33 1593 9299</p>
+          <p>📞 Teléfono: 33 3122 3063</p>
+          <p>📍 Dirección: Calle Fidias, Diag. San Jorge 175, 44690 Guadalajara, Jal.</p>
           <p>⏰ Horario: Lunes a Sábado 9:00 – 18:00</p>
         </div>
       </div>

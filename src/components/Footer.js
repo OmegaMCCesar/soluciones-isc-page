@@ -22,8 +22,9 @@ export default function Footer() {
 
         <div>
           <h4 className="font-semibold text-white mb-2">Contacto</h4>
-          <p>Guadalajara, Jalisco</p>
-          <p>Tel: 33 2920 8149</p>
+          <p>📞 Teléfono: 33 1593 9299</p>
+          <p>📞 Teléfono: 33 3122 3063</p>
+          <p>📍 Dirección: Calle Fidias, Diag. San Jorge 175, 44690 Guadalajara, Jal.</p>
         </div>
       </div>
     </footer>
