@@ -41,6 +41,71 @@ export default function Home() {
         </div>
       </section>
 
+      {/* PROCESO TECNICO */}
+      <section className="max-w-7xl mx-auto px-6 py-20">
+        <h3 className="text-2xl font-bold mb-4">
+          Nuestro proceso técnico
+        </h3>
+        <p className="text-gray-600 mb-10 max-w-3xl">
+          Cada servicio se realiza bajo un proceso profesional de diagnóstico,
+          validación en sitio y reparación con respaldo técnico. No improvisamos,
+          trabajamos con metodología y experiencia real.
+        </p>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          <div className="border rounded-lg overflow-hidden">
+            <img
+              src="/images/proceso/diagnostico-interno.jpg"
+              alt="Diagnóstico técnico interno"
+              className="w-full h-48 object-cover"
+            />
+            <div className="p-4">
+              <h4 className="font-semibold mb-2">
+                Diagnóstico profesional
+              </h4>
+              <p className="text-sm text-gray-600">
+                Evaluación técnica interna del equipo, validando sistemas
+                eléctricos, hidráulicos y electrónicos.
+              </p>
+            </div>
+          </div>
+
+          <div className="border rounded-lg overflow-hidden">
+            <img
+              src="/images/proceso/pruebas-en-sitio.jpg"
+              alt="Pruebas en sitio"
+              className="w-full h-48 object-cover"
+            />
+            <div className="p-4">
+              <h4 className="font-semibold mb-2">
+                Pruebas en sitio
+              </h4>
+              <p className="text-sm text-gray-600">
+                Verificación real en el domicilio del cliente para confirmar
+                causas y descartar fallas externas.
+              </p>
+            </div>
+          </div>
+
+          <div className="border rounded-lg overflow-hidden">
+            <img
+              src="/images/proceso/electronica-avanzada.jpg"
+              alt="Electrónica avanzada"
+              className="w-full h-48 object-cover"
+            />
+            <div className="p-4">
+              <h4 className="font-semibold mb-2">
+                Capacidad electrónica avanzada
+              </h4>
+              <p className="text-sm text-gray-600">
+                Manejo y diagnóstico de tarjetas electrónicas, sensores y
+                sistemas de control.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* MARCAS */}
       <section className="max-w-7xl mx-auto px-6 py-16">
         <h3 className="text-2xl font-bold mb-6">

@@ -16,7 +16,7 @@ export default function Contacto() {
       </div>
 
       {/* MAPA */}
-      <div className="w-full h-[420px] rounded-xl overflow-hidden border shadow-sm">
+      <div className="w-full h-105 rounded-xl overflow-hidden border shadow-sm">
   <iframe
     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3732.782412427556!2d-103.39745732492912!3d20.67842948088471!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8428ae63be5bd223%3A0x60f8fd52d10e49d0!2sSOLUCIONES%20ISC!5e0!3m2!1ses-419!2smx!4v1770089696322!5m2!1ses-419!2smx"
     className="w-full h-full"
