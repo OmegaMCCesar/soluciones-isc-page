@@ -16,36 +16,42 @@ export default function ODSList() {
   // ESCUCHAR DATOS EN TIEMPO REAL
   // ==========================================
   useEffect(() => {
-    let unsubscribeDb = null;
+  let unsubscribeDb = null
 
-    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // CORRECCIÓN 1: Cambiamos 'createdAt' por 'fechaCreacion'
-        const q = query(collection(db, 'ods'), orderBy('fechaCreacion', 'desc'))
-        
-        unsubscribeDb = onSnapshot(q, (snapshot) => {
-          const odsData = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-          }))
-          setOds(odsData)
-          setLoading(false)
-        }, (error) => {
-          console.error("Error obteniendo ODS:", error)
-          setLoading(false)
-        })
-      } else {
+  const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
+
+    if (!user) {
+      setLoading(false)
+      return
+    }
+
+    const q = query(
+      collection(db, 'ods'),
+      orderBy('fechaCreacion', 'desc')
+    )
+
+    unsubscribeDb = onSnapshot(
+      q,
+      (snapshot) => {
+        const odsData = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        setOds(odsData)
+        setLoading(false)
+      },
+      (error) => {
+        console.error("🔥 Firestore error:", error)
         setLoading(false)
       }
-    });
+    )
+  })
 
-    return () => {
-      unsubscribeAuth();
-      if (unsubscribeDb) {
-        unsubscribeDb();
-      }
-    }
-  }, [])
+  return () => {
+    unsubscribeAuth()
+    if (unsubscribeDb) unsubscribeDb()
+  }
+}, [])
 
   // ==========================================
   // FILTRADO DE BÚSQUEDA

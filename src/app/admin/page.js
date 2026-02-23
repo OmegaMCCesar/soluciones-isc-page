@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { obtenerODS, buscarODS } from '@/lib/firestore';
 import ImportarGSPN from '@/components/ImportarGSPN';
+ import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '@/lib/firebase'
 
 export default function AdminPanel() {
   const [ods, setOds] = useState([]);
@@ -13,9 +15,17 @@ export default function AdminPanel() {
   const [busqueda, setBusqueda] = useState('');
   const router = useRouter();
 
-  useEffect(() => {
-    cargarODS();
-  }, []);
+useEffect(() => {
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    if (user) {
+      cargarODS()
+    } else {
+      setLoading(false)
+    }
+  })
+
+  return () => unsubscribe()
+}, [])
 
   const cargarODS = async () => {
     try {
