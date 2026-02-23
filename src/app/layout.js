@@ -1,9 +1,5 @@
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
-import ChatWidget from "@/components/ChatWidget";
-
+import GlobalUI from "@/components/GlobalUI";
 
 export const metadata = {
   title: "Soluciones ISC | Centro de Servicio Autorizado Samsung",
@@ -13,12 +9,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
-      <body className="flex flex-col min-h-screen">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <WhatsAppButton />
-        <ChatWidget />
-        <Footer />
+      <body className="flex flex-col min-h-screen m-0 p-0 overflow-x-hidden">
+        {/* Toda la lógica visual ahora la maneja GlobalUI */}
+        <GlobalUI>
+          {children}
+        </GlobalUI>
       </body>
     </html>
   );

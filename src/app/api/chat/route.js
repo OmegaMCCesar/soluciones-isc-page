@@ -80,8 +80,7 @@ export async function POST(req) {
         }
         break
 
-
-      case 'WAIT_ODS_NUMBER':
+case 'WAIT_ODS_NUMBER':
         const odsNumber = textRaw.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
         
         if (odsNumber.length < 4) {
@@ -89,22 +88,45 @@ export async function POST(req) {
             break; 
         }
 
-        const odsRef = adminDb.collection('ordenes').doc(odsNumber)
+        // 1. Apuntamos a la nueva colección 'ods'
+        const odsRef = adminDb.collection('ods').doc(odsNumber)
         const odsSnap = await odsRef.get()
 
         if (odsSnap.exists) {
           const odsData = odsSnap.data()
-          reply = 
-`📋 *Información de tu ODS:*
+          
+          // 2. Extraemos los datos usando la NUEVA estructura unificada
+          const estadoActual = odsData.reparacion?.status?.razon || odsData.estado || 'En proceso';
+          const nombreCliente = odsData.cliente?.nombre || 'No disponible';
+          // Tomamos solo el primer nombre para hacerlo más amigable
+          const primerNombre = nombreCliente.split(' ')[0]; 
+          
+          const modelo = odsData.producto?.modelo || 'Tu equipo';
+          const marca = odsData.producto?.descripcion?.split(' ')[0] || '';
+          const fechaLlegadaRefaccion = odsData.reparacion?.fecha_refaccion;
+          
+          let fechaTexto = 'Pendiente';
+          if (odsData.fechaCreacion && odsData.fechaCreacion.toDate) {
+              fechaTexto = odsData.fechaCreacion.toDate().toLocaleDateString();
+          }
 
-🔢 **Número:** ${odsData.odsNumber || odsNumber}
-👤 **Cliente:** ${odsData.nombre || 'No disponible'}
-📱 **Teléfono:** ${odsData.telefono || 'No disponible'}
-🛠 **Estado:** ${odsData.estado || 'En proceso'}
-📅 **Fecha:** ${odsData.createdAt?.toDate ? odsData.createdAt.toDate().toLocaleDateString() : 'Pendiente'}
+          let mensajeExtra = '';
+          if (estadoActual.toLowerCase().includes('espera de refacción') && fechaLlegadaRefaccion) {
+            mensajeExtra = `\n📦 *Llegada de pieza:* ${fechaLlegadaRefaccion}`;
+          }
+
+          // 3. Formateamos el mensaje para el cliente
+          reply = 
+`Hola ${primerNombre}, aquí tienes la información de tu ODS:
+
+🔢 **Folio:** ${odsData.folio || odsNumber}
+📺 **Equipo:** ${marca} ${modelo}
+🛠 **Estado Actual:** ${estadoActual}
+📅 **Fecha de Ingreso:** ${fechaTexto}${mensajeExtra}
 
 Si deseas realizar otra consulta, presiona el botón de abajo.`
         } else {
+          // Si no existe, lo mandamos a pendientes de carga como ya lo tenías
           await adminDb.collection('odsPendientesCarga').add({
             odsNumber,
             createdAt: new Date(),
@@ -112,9 +134,9 @@ Si deseas realizar otra consulta, presiona el botón de abajo.`
           })
 
           reply = 
-`🟡 Tu ODS está en proceso de carga en nuestro sistema.
+`🟡 No logré encontrar la orden ${odsNumber} en el sistema. Es posible que apenas esté en proceso de carga.
 
-Te recomendamos consultar nuevamente más tarde.
+Te recomendamos verificar el número o consultar nuevamente más tarde.
 
 ¿Deseas hacer otra cosa?`
         }
